@@ -39,7 +39,13 @@ function Install-VSC-Windows {
     # Create Shortcut
     if ($CreateShortCut -eq $true)
     {
-        Create-Shortcut -ShortcutName 'Visual Studio Code' -TargetPath 'C:\Program Files\Microsoft VS Code\Code.exe'
+        if ($Scope  -eq 'local') {
+            $shortcutPath = Join-Path $env:LocalAppData "Programs\Microsoft VS Code\Code.exe"
+            Create-Shortcut -ShortcutName 'Visual Studio Code' -TargetPath $shortcutPath
+        } 
+        elseif ($Scope -eq 'global') {
+            Create-Shortcut -ShortcutName 'Visual Studio Code' -TargetPath 'C:\Program Files\Microsoft VS Code\Code.exe'
+        }  
     }
 }
 
